@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MaShazi's Kitchen | Authentic Home-Style Cooking</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap');
+
+        :root {
+            --primary: #c2410c; /* warm orange/red */
+            --secondary: #fef3c7; /* light cream */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-5px);
+            transition: all 0.3s ease;
+        }
+
+        .custom-shadow {
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        #message-box {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex-shrink-0 flex items-center">
+                    <span class="text-2xl font-bold text-orange-700">MaShazi's Kitchen</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="hover:text-orange-700 transition font-medium">Home</a>
+                    <a href="#menu" class="hover:text-orange-700 transition font-medium">Our Menu</a>
+                    <a href="#about" class="hover:text-orange-700 transition font-medium">About Us</a>
+                    <a href="#contact" class="px-5 py-2 bg-orange-700 text-white rounded-full hover:bg-orange-800 transition shadow-lg">Contact Us</a>
+                </div>
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-600 focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-gray-100 p-4 space-y-4 shadow-xl">
+            <a href="#home" class="block text-lg font-medium">Home</a>
+            <a href="#menu" class="block text-lg font-medium">Our Menu</a>
+            <a href="#about" class="block text-lg font-medium">About Us</a>
+            <a href="#contact" class="block text-lg font-medium text-orange-700">Contact Us</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-gradient h-screen flex items-center justify-center text-center text-white px-4">
+        <div class="max-w-3xl">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6">Taste the Heart of <span class="text-orange-400">Home</span></h1>
+            <p class="text-xl md:text-2xl mb-8 font-light italic">"Prepared with love, served with pride."</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#menu" class="bg-orange-700 hover:bg-orange-800 text-white px-8 py-4 rounded-full text-lg font-semibold transition transform hover:scale-105">View Menu</a>
+                <a href="#contact" class="bg-white hover:bg-gray-100 text-gray-900 px-8 py-4 rounded-full text-lg font-semibold transition">Order Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Our Signature Dishes</h2>
+                <div class="w-24 h-1 bg-orange-700 mx-auto rounded-full mb-6"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto">Explore our carefully curated selection of traditional and contemporary favorites, made from the freshest ingredients.</p>
+            </div>
+
+            <!-- Category Filter -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12">
+                <button onclick="filterMenu('all')" class="filter-btn active px-6 py-2 rounded-full border border-orange-700 bg-orange-700 text-white transition">All</button>
+                <button onclick="filterMenu('main')" class="filter-btn px-6 py-2 rounded-full border border-gray-200 hover:border-orange-700 transition">Main Meals</button>
+                <button onclick="filterMenu('sides')" class="filter-btn px-6 py-2 rounded-full border border-gray-200 hover:border-orange-700 transition">Sides & Salads</button>
+                <button onclick="filterMenu('dessert')" class="filter-btn px-6 py-2 rounded-full border border-gray-200 hover:border-orange-700 transition">Desserts</button>
+            </div>
+
+            <div id="menu-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Main Items -->
+                <div class="menu-item main bg-gray-50 rounded-2xl overflow-hidden menu-card custom-shadow">
+                    <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80" alt="Braai Platter" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold">Shisa Nyama Platter</h3>
+                            <span class="text-orange-700 font-bold">R180</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Succulent grilled steak, boerewors, and chicken wings served with chakalaka and pap.</p>
+                    </div>
+                </div>
+
+                <div class="menu-item main bg-gray-50 rounded-2xl overflow-hidden menu-card custom-shadow">
+                    <img src="https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?auto=format&fit=crop&w=600&q=80" alt="Curry" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold">Ma's Mutton Curry</h3>
+                            <span class="text-orange-700 font-bold">R145</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Slow-cooked tender mutton in a rich, spicy gravy with potatoes. Best served with rice or roti.</p>
+                    </div>
+                </div>
+
+                <div class="menu-item main bg-gray-50 rounded-2xl overflow-hidden menu-card custom-shadow">
+                    <img src="https://images.unsplash.com/photo-1606471191009-63994c53433b?auto=format&fit=crop&w=600&q=80" alt="Stew" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold">Ox-Tail Stew</h3>
+                            <span class="text-orange-700 font-bold">R195</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">A hearty traditional favorite, simmered for hours with winter vegetables and secret spices.</p>
+                    </div>
+                </div>
+
+                <!-- Sides Items -->
+                <div class="menu-item sides bg-gray-50 rounded-2xl overflow-hidden menu-card custom-shadow">
+                    <img src="https://images.unsplash.com/photo-1543339308-43e59d6b73a6?auto=format&fit=crop&w=600&q=80" alt="Chakalaka" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold">Spicy Chakalaka</h3>
+                            <span class="text-orange-700 font-bold">R35</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Homemade spicy vegetable relish with carrots, peppers, and beans.</p>
+                    </div>
+                </div>
+
+                <!-- Dessert Items -->
+                <div class="menu-item dessert bg-gray-50 rounded-2xl overflow-hidden menu-card custom-shadow">
+                    <img src="https://images.unsplash.com/photo-1582294863914-8b6d01cc745c?auto=format&fit=crop&w=600&q=80" alt="Malva Pudding" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold">Malva Pudding</h3>
+                            <span class="text-orange-700 font-bold">R55</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Warm, apricot-infused sponge pudding served with creamy custard or vanilla ice cream.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 bg-orange-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center gap-12">
+            <div class="md:w-1/2">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=800&q=80" alt="Kitchen" class="rounded-2xl shadow-2xl relative z-10">
+                    <div class="absolute -top-4 -left-4 w-full h-full border-2 border-orange-700 rounded-2xl z-0"></div>
+                </div>
+            </div>
+            <div class="md:w-1/2">
+                <h2 class="text-4xl font-bold mb-6 text-gray-900">Our Story</h2>
+                <p class="text-gray-700 text-lg mb-6 leading-relaxed">
+                    MaShazi’s Kitchen started with a simple belief: that food is a language of love. Founded by MaShazi herself, the kitchen brings generations of traditional recipes to your plate.
+                </p>
+                <p class="text-gray-700 text-lg mb-8 leading-relaxed">
+                    Every spice is hand-picked, and every meal is cooked slowly to ensure that authentic "home-cooked" feeling that you just can't find anywhere else.
+                </p>
+                <div class="flex items-center space-x-4">
+                    <div class="text-center p-4 bg-white rounded-xl shadow-sm">
+                        <span class="block text-2xl font-bold text-orange-700">10+</span>
+                        <span class="text-sm text-gray-500 uppercase tracking-wider">Years Exp</span>
+                    </div>
+                    <div class="text-center p-4 bg-white rounded-xl shadow-sm">
+                        <span class="block text-2xl font-bold text-orange-700">5000+</span>
+                        <span class="text-sm text-gray-500 uppercase tracking-wider">Happy Guests</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                <!-- Contact Info -->
+                <div>
+                    <h2 class="text-4xl font-bold mb-8">Get In Touch</h2>
+                    <p class="text-gray-600 mb-10 text-lg">We'd love to cater your next event or welcome you for a meal. Reach out to us via any of the channels below.</p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="bg-orange-100 p-3 rounded-full text-orange-700">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">Address</h4>
+                                <p class="text-gray-600">123 Culinary Drive, Morningside<br>Durban, 4001</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="bg-orange-100 p-3 rounded-full text-orange-700">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">Phone</h4>
+                                <p class="text-gray-600">+27 31 555 0123</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="bg-orange-100 p-3 rounded-full text-orange-700">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">Email</h4>
+                                <p class="text-gray-600">hello@mashaziskitchen.com</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-12">
+                        <h4 class="font-bold mb-4">Follow Us</h4>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-2xl text-gray-400 hover:text-orange-700 transition"><i class="fa-brands fa-facebook"></i></a>
+                            <a href="#" class="text-2xl text-gray-400 hover:text-orange-700 transition"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="#" class="text-2xl text-gray-400 hover:text-orange-700 transition"><i class="fa-brands fa-whatsapp"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="bg-gray-50 p-8 rounded-3xl shadow-inner">
+                    <form id="contactForm" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">Your Name</label>
+                                <input type="text" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-700/50 transition">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">Phone Number</label>
+                                <input type="tel" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-700/50 transition">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Email Address</label>
+                            <input type="email" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-700/50 transition">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Your Message</label>
+                            <textarea rows="4" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-700/50 transition" placeholder="Tell us what's on your mind..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-orange-700 hover:bg-orange-800 text-white font-bold py-4 rounded-xl transition shadow-lg transform hover:-translate-y-1">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h2 class="text-2xl font-bold text-orange-400 mb-6 italic">MaShazi's Kitchen</h2>
+            <p class="text-gray-400 mb-8 max-w-md mx-auto">Providing the taste of home to our community since 2014.</p>
+            <div class="text-gray-500 text-sm">
+                &copy; <span id="year"></span> MaShazi's Kitchen. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Success Message Box -->
+    <div id="message-box" class="bg-green-600 text-white px-6 py-4 rounded-xl shadow-2xl flex items-center space-x-4">
+        <i class="fa-solid fa-circle-check text-2xl"></i>
+        <span>Your message has been sent successfully! We'll get back to you soon.</span>
+        <button onclick="closeMessageBox()" class="text-white hover:text-gray-200 ml-4 font-bold">X</button>
+    </div>
+
+    <script>
+        // Set Current Year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu on click
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        });
+
+        // Menu Filter Logic
+        function filterMenu(category) {
+            const items = document.querySelectorAll('.menu-item');
+            const btns = document.querySelectorAll('.filter-btn');
+
+            // Update Buttons
+            btns.forEach(btn => {
+                btn.classList.remove('bg-orange-700', 'text-white', 'border-orange-700');
+                btn.classList.add('border-gray-200');
+            });
+
+            const activeBtn = Array.from(btns).find(btn => btn.innerText.toLowerCase().includes(category) || (category === 'all' && btn.innerText === 'All'));
+            if(activeBtn) {
+                activeBtn.classList.remove('border-gray-200');
+                activeBtn.classList.add('bg-orange-700', 'text-white', 'border-orange-700');
+            }
+
+            // Filter Grid
+            items.forEach(item => {
+                if (category === 'all' || item.classList.contains(category)) {
+                    item.style.display = 'block';
+                    // Trigger fade in animation
+                    item.style.opacity = '0';
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                        item.style.transition = 'opacity 0.4s ease';
+                    }, 50);
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Form Handling
+        const contactForm = document.getElementById('contactForm');
+        const messageBox = document.getElementById('message-box');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Show custom message box instead of alert
+            messageBox.style.display = 'flex';
+            
+            // Reset form
+            contactForm.reset();
+
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                closeMessageBox();
+            }, 5000);
+        });
+
+        function closeMessageBox() {
+            messageBox.style.display = 'none';
+        }
+
+        // Simple smooth scroll highlighting (Optional)
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('nav a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= (sectionTop - 100)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('text-orange-700');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('text-orange-700');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
